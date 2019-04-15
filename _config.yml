@@ -28,12 +28,12 @@ social:
 # 百度统计 
 # 使用博客模板请去掉或者更换 id 
 baidu:
-    id: xxxx  
+    id: d5ea224d4c318d2849c6847f9511f015  
 
 # Google Analytics
 # 使用博客模板请去掉或者更换 id
 ga:
-    id: xxxx  
+    id: UA-138360804-1  
     host: auto  
 
 
