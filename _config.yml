@@ -10,8 +10,8 @@ url: "https://yuu6.github.io"
 
 # Comment
 comment:
-    disqus: leopard
-    # gitment: xxx // 需要修改 comments.html中的client_id和client_secret
+    # disqus: leopard
+    gitment: true // 需要修改 comments.html中的client_id和client_secret
     # uyan: 2143225  # 有言id,登录有言官网申请
 
 # Social
