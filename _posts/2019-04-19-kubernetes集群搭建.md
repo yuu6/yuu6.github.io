@@ -55,9 +55,9 @@ vi /etc/selinux/config
 
 ### <a name="step2"></a>安装集群
 
-[安装集群](https://blog.51cto.com/2168836/2106963)
+[集群安装步骤](https://blog.51cto.com/2168836/2106963)
 
 
 ### <a name="step3"></a>解决故障
 
-[解决故障](https://blog.csdn.net/qq_38695182/article/details/82971114）
+[解决故障](https://blog.csdn.net/qq_38695182/article/details/82971114)
