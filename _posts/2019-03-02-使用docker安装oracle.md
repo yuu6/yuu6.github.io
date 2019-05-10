@@ -71,8 +71,11 @@ grant connect to sys identified by taxgm2016
 查看当前容器
 ```
 show con_name
+
+CON_NAME
+------------------------------
+xe
 ```
-> 显示 xe
 
 创建表空间
 ```
