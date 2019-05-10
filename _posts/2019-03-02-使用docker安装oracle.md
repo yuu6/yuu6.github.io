@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 使用docker安装oracle
+title: 使用docker安装oracle,恢复数据库
 date: 2019-03-02
 tags: docker,oracle
 ---
@@ -8,6 +8,7 @@ tags: docker,oracle
 * [拉取镜像](#get-image)
 * [部署oracle环境](#set-env)
 * [导入dmp数据文件](#dump)
+
 ### <a name="get-image"></a>拉取镜像
 
 首先检测仓库里面可用的oracle版本
@@ -32,6 +33,11 @@ vi /etc/docker/daemon.json
 ```
 docker pull sath89/oracle-12c
 ```
+
+也可以在官网上找寻合适的版本, [地址](https://container-registry.oracle.com/pls/apex/f?p=113:1:115813330162073::NO:1:P1_BUSINESS_AREA:3)
+
+如果要安装的是12cR2,可以在阿里云上找，这里有现成的[方案](https://blog.csdn.net/another_liu/article/details/89436340)
+
 
 拉取完成之后，进入容器
 
@@ -105,3 +111,4 @@ grant read,write on directory DMPDIR to USERNAME;
 
 impdp tax/taxgm2016@localhost/xe DIRECTORY=DMPDIR DUMPFILE=full.dmp  logfile=oracle.log
 ```
+
