@@ -2,8 +2,10 @@
 layout: post
 title: 使用docker安装oracle,恢复数据库
 date: 2019-03-02
-tags: docker,oracle
+tags: docker oracle
 ---
+
+### 目录
 
 * [拉取镜像](#get-image)
 * [部署oracle环境](#set-env)
@@ -14,13 +16,13 @@ tags: docker,oracle
 首先检测仓库里面可用的oracle版本
 
 ```
-docker search oracle
+[root@server1 ~]# docker search oracle
 ```
 
 如果远程仓库没有12c版本的话，添加阿里云仓库
 
 ```shell 
-vi /etc/docker/daemon.json
+[root@server1 ~]# vi /etc/docker/daemon.json
 
 ## 添加一下内容
 {
@@ -30,8 +32,8 @@ vi /etc/docker/daemon.json
 
 挑选12c版本
 
-```
-docker pull sath89/oracle-12c
+```shell
+[root@server1 ~]# docker pull sath89/oracle-12c
 ```
 
 也可以在官网上找寻合适的版本, [地址](https://container-registry.oracle.com/pls/apex/f?p=113:1:115813330162073::NO:1:P1_BUSINESS_AREA:3)
@@ -42,7 +44,7 @@ docker pull sath89/oracle-12c
 拉取完成之后，进入容器
 
 ```shell
-docker exec -it f8dbc1849055 /bin/bash
+[root@server1 ~]# docker exec -it f8dbc1849055 /bin/bash
 ```
 
 
@@ -52,7 +54,7 @@ docker exec -it f8dbc1849055 /bin/bash
 首先以管理员身份登录
 
 ```shell
-sqlplus / as sysdba 
+[root@server1 ~]# sqlplus / as sysdba 
 ```
 
 默认的用户名和密码
@@ -63,14 +65,14 @@ sqlplus / as sysdba
 
 更改超级管理员的密码，并且赋予连接权限
 
-```
-alter user sys identified by taxgm2016
-grant connect to sys identified by taxgm2016
+```sql
+SQL> alter user sys identified by taxgm2016
+SQL> grant connect to sys identified by taxgm2016
 ```
 
 查看当前容器
-```
-show con_name
+```sql
+SQL> show con_name
 
 CON_NAME
 ------------------------------
@@ -78,8 +80,8 @@ xe
 ```
 
 创建表空间
-```
-create  tablespace  [ tablespace  ]
+```sql
+SQL> create  tablespace  [ tablespace  ]
         Datafile [‘D:\database\oracle_table_space\tablespace_name.dbf’] size [1024m]
         autoextend  [on|off] next [526k]  
         [ logging|nologging;]
@@ -94,23 +96,23 @@ create  tablespace  [ tablespace  ]
 
 创建新用户
 
-```
-create user test identified by 123456 default tablespace  tablespace_name  ;   //其中test为用户名，123456为密码
+```sql
+SQL> create user test identified by 123456 default tablespace  tablespace_name  ;   //其中test为用户名，123456为密码
 ```
 
 授权
 
-```
-grant connect,dba,exp_full_database,imp_full_database to  with  tablespace_name   admin option;
+```sql
+SQL> grant connect,dba,exp_full_database,imp_full_database to  with  tablespace_name   admin option;
 ```
 
 ### <a name="dump"></a>导入dump数据文件
 
-```
-CREATE OR REPLACE DIRECTORY DMPDIR AS 'DIR';  // 引入挂载目录
+```sql
+SQL> CREATE OR REPLACE DIRECTORY DMPDIR AS 'DIR';  // 引入挂载目录
 
-grant read,write on directory DMPDIR to USERNAME;
+SQL> grant read,write on directory DMPDIR to USERNAME;
 
-impdp tax/taxgm2016@localhost/xe DIRECTORY=DMPDIR DUMPFILE=full.dmp  logfile=oracle.log
+SQL> impdp tax/taxgm2016@localhost/xe DIRECTORY=DMPDIR DUMPFILE=full.dmp  logfile=oracle.log
 ```
 
