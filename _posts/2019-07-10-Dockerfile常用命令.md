@@ -55,7 +55,16 @@ ADD software.lic /opt/application/software.lic
 ```
 
 COPY
-> 
+> 和ADD指令类似，根本不同在于COPY只关心在构建上下文中复制本地文件，而不会去做文件提取和解压工作。
+```
+COPY conf.d/ /etc/apatch2
+```
+第一个路径是本地路径，本地路径必须在DOCKERFILE 文件之下的位置；第二个是容器里面的路径，必须是绝对路径。
+如果容器内路径不存在，则会自动创建该路径，如同makir -p 命令那样。
+
+
+
+
 
 
 
